@@ -8,10 +8,14 @@ let easyMode = 0;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  ground = new Ground(height*2/3,10);
 }
 
 function draw() {
   background(220);
+  ground.action();
+  fill(1,255,255);
+  //rect(width/2,height*2/3 - 50,50,50); hight for the charater
 }
 
 class Ground{
@@ -22,7 +26,8 @@ class Ground{
   }
 
   display(){
-
+    fill(255,255,255);
+    rect(this.xPosition,this.yPosition,width,500);
   }
 
   move(){
@@ -36,14 +41,16 @@ class Ground{
     //   this.xPosition = this.xPosition - (this.speed + hardMode);
     // }
 
-
     this.xPosition = this.xPosition - (this.speed + easyMode); //tempary line remove later
 
     if(this.xPosition < 0){
-      this.xPosition += width;
+      this.xPosition = 0;
     }
-    if(this.xPosition > width){
-      this.xPosition -= width;
-    }
+    
+  }
+
+  action(){
+    this.display();
+    this.move();
   }
 }
