@@ -5,12 +5,18 @@
 //too add list
 //seconed background to move from oppsite direction to get rid of any blind spots
 
+let floor;
+
 let easyMode = 0;
 let normalMode = 10;
 let hardMode = 20;
 
+function preload(){
+  floor = loadImage("assets/bg/01_ground.png");
+}
+
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1028, windowHeight);
   ground = new Ground(height*2/3,10);
 }
 
@@ -21,20 +27,22 @@ function draw() {
 
 class Ground{
   constructor(yPosition, speed){
-    this.xPosition = windowWidth;
+    this.xPosition = 0;
     this.yPosition = yPosition;
     this.speed = speed;
     this.floorX = windowWidth;
     this.sky = windowWidth;
+    this.sky2 = 0;
   }
 
   display(){
     //sky
     fill(0,100,255);
-    square(this.sky,this.yPosition/3, windowHeight* windowWidth);
+    rect(this.sky,0, width*4, height);
 
-    fill(255,255,255);
-    rect(this.xPosition,this.yPosition,width,500);
+    //ground
+    image(floor,this.xPosition,this.yPosition);
+    
 
     //banner
     fill(255,0,0);
@@ -53,16 +61,19 @@ class Ground{
     //   this.xPosition = this.xPosition - (this.speed + hardMode);
     // }
 
+    //floor move
     this.xPosition = this.xPosition - (this.speed + easyMode); //tempary line remove later
 
     //floor design move
     this.floorX = this.floorX - (this.speed + easyMode);
 
+
     //BACKGROUND MOVING
     this.sky = this.sky - (this.speed - 2);
 
-    //floor moving
-    if(this.xPosition < 0){
+
+    //floor moving const
+    if(this.xPosition < -2048){
       this.xPosition = 0;
     }
 
@@ -75,13 +86,11 @@ class Ground{
     }
 
     //making sky move
-    if(this.sky < 0){
-      this.sky += width;
-    }
-    if(this.sky > width){
-      this.sky -= width;
+    if(this.sky < -width*2){
+      this.sky = width*2;
     }
   }
+
 
   action(){
     this.display();
