@@ -4,8 +4,10 @@
 
 //too add list
 //seconed background to move from oppsite direction to get rid of any blind spots
-
+//add steampunk theme
 let floor;
+let bush;
+let sky;
 
 let easyMode = 0;
 let normalMode = 10;
@@ -13,6 +15,8 @@ let hardMode = 20;
 
 function preload(){
   floor = loadImage("assets/bg/01_ground.png");
+  bush = loadImage("assets/bg/bush.png");
+  sky = loadImage("assets/bg/11_background.png");
 }
 
 function setup() {
@@ -30,46 +34,33 @@ class Ground{
     this.xPosition = 0;
     this.yPosition = yPosition;
     this.speed = speed;
-    this.floorX = windowWidth;
-    this.sky = windowWidth;
-    this.sky2 = 0;
+    this.bushX = windowWidth;
+    this.skyX = windowWidth;
   }
 
   display(){
     //sky
-    fill(0,100,255);
-    rect(this.sky,0, width*4, height);
+    image(sky,this.skyX,0);
+    //rect(this.sky,0, width*4, height);
 
     //ground
     image(floor,this.xPosition,this.yPosition);
     
 
-    //banner
-    fill(255,0,0);
-    square(this.floorX,this.yPosition + 25, 25, 25);
-
+    //bush
+    image(bush,this.bushX,this.yPosition - 5);
   }
 
   move(){
-    // if(score < 1000){
-    //   this.xPosition = this.xPosition - (this.speed + easyMode);
-    // }
-    // if(score <= 2000 && score >= 1000){
-    //   this.xPosition = this.xPosition - (this.speed + normalMode);
-    // }
-    // if(score > 2000){
-    //   this.xPosition = this.xPosition - (this.speed + hardMode);
-    // }
-
     //floor move
-    this.xPosition = this.xPosition - (this.speed + easyMode); //tempary line remove later
+    this.xPosition = this.xPosition - (this.speed*2 + easyMode);
 
     //floor design move
-    this.floorX = this.floorX - (this.speed + easyMode);
+    this.bushX = this.bushX - (this.speed + easyMode);
 
 
     //BACKGROUND MOVING
-    this.sky = this.sky - (this.speed - 2);
+    this.skyX = this.skyX - (this.speed - 2);
 
 
     //floor moving const
@@ -78,35 +69,21 @@ class Ground{
     }
 
     //making the floor design loop
-    if(this.floorX < 0){
-      this.floorX += width;
+    if(this.bushX < 0){
+      this.bushX += width;
     }
-    if(this.floorX > width){
-      this.floorX -= width;
+    if(this.bushX > width){
+      this.bushX -= width;
     }
 
     //making sky move
-    if(this.sky < -width*2){
-      this.sky = width*2;
+    if(this.skyX < -width*2){
+      this.skyX = width*2;
     }
   }
-
 
   action(){
     this.display();
     this.move();
   }
 }
-
-
-
-// class charater{
-//   constructor(){
-//   }
-
-//   display(){
-//     fill(1,255,255);
-//     rect(width/2,height*2/3 - 50,50,50);//place holder
-//   }
-
-// }
