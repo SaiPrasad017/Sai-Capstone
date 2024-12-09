@@ -6,7 +6,7 @@
 //seconed background to move from oppsite direction to get rid of any blind spots
 //add steampunk theme
 let floor;
-let bush;
+let banner;
 let sky;
 
 let easyMode = 0;
@@ -15,8 +15,8 @@ let hardMode = 20;
 
 function preload(){
   floor = loadImage("assets/bg/01_ground.png");
-  bush = loadImage("assets/bg/bush.png");
-  sky = loadImage("assets/bg/11_background.png");
+  banner = loadImage("assets/bg/flag.png");
+  //sky = loadImage("assets/bg/11_background.png");
 }
 
 function setup() {
@@ -34,21 +34,21 @@ class Ground{
     this.xPosition = 0;
     this.yPosition = yPosition;
     this.speed = speed;
-    this.bushX = windowWidth;
+    this.bannerX = windowWidth;
     this.skyX = windowWidth;
   }
 
   display(){
     //sky
-    image(sky,this.skyX,0);
+    //image(sky,this.skyX,0);
     //rect(this.sky,0, width*4, height);
 
     //ground
     image(floor,this.xPosition,this.yPosition);
     
 
-    //bush
-    image(bush,this.bushX,this.yPosition - 5);
+    //banner
+    image(banner,this.bannerX,this.yPosition - 5);
   }
 
   move(){
@@ -56,7 +56,7 @@ class Ground{
     this.xPosition = this.xPosition - (this.speed*2 + easyMode);
 
     //floor design move
-    this.bushX = this.bushX - (this.speed + easyMode);
+    this.bannerX = this.bannerX - (this.speed + easyMode);
 
 
     //BACKGROUND MOVING
@@ -69,11 +69,11 @@ class Ground{
     }
 
     //making the floor design loop
-    if(this.bushX < 0){
-      this.bushX += width;
+    if(this.bannerX < 0){
+      this.bannerX += width;
     }
-    if(this.bushX > width){
-      this.bushX -= width;
+    if(this.bannerX > width){
+      this.bannerX -= width;
     }
 
     //making sky move
