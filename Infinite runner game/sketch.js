@@ -5,9 +5,14 @@
 //too add list
 //seconed background to move from oppsite direction to get rid of any blind spots
 //add steampunk theme
+//make a for loop for adding backgrounds
 let floor;
 let banner;
 let sky;
+let skyDetail1;
+let skyDetail2;
+let skyDetail3;
+let skyDetail4;
 
 let easyMode = 0;
 let normalMode = 10;
@@ -16,7 +21,11 @@ let hardMode = 20;
 function preload(){
   floor = loadImage("assets/bg/01_ground.png");
   banner = loadImage("assets/bg/flag.png");
-  //sky = loadImage("assets/bg/11_background.png");
+  sky = loadImage("assets/bg/background.png");
+  skyDetail1 = loadImage("assets/bg/background 1.png");
+  skyDetail2 = loadImage("assets/bg/background 2.png");
+  skyDetail3 = loadImage("assets/bg/background 3.png");
+  skyDetail4 = loadImage("assets/bg/background 4.png");
 }
 
 function setup() {
@@ -35,13 +44,16 @@ class Ground{
     this.yPosition = yPosition;
     this.speed = speed;
     this.bannerX = windowWidth;
-    this.skyX = windowWidth;
+    this.skyX = 0;
   }
 
   display(){
     //sky
-    //image(sky,this.skyX,0);
-    //rect(this.sky,0, width*4, height);
+    image(sky,this.skyX - 2,0);
+    image(skyDetail1,this.skyX,0);
+    image(skyDetail2,this.skyX + 2,0);
+    image(skyDetail3,this.skyX + 4,0);
+    image(skyDetail4,this.skyX + 6,0);
 
     //ground
     image(floor,this.xPosition,this.yPosition);
@@ -60,7 +72,7 @@ class Ground{
 
 
     //BACKGROUND MOVING
-    this.skyX = this.skyX - (this.speed - 2);
+    this.skyX = this.skyX - (this.speed - 4);
 
 
     //floor moving const
@@ -78,7 +90,7 @@ class Ground{
 
     //making sky move
     if(this.skyX < -width*2){
-      this.skyX = width*2;
+      this.skyX = 0;
     }
   }
 
