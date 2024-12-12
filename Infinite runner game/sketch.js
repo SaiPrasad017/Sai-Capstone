@@ -31,11 +31,13 @@ function preload(){
 function setup() {
   createCanvas(1028, windowHeight);
   ground = new Ground(height*2/3,10);
+  player = new Player(height*2/3);
 }
 
 function draw() {
   background(220);
   ground.action();
+  player.display();
 }
 
 class Ground{
@@ -98,4 +100,46 @@ class Ground{
     this.display();
     this.move();
   }
+}
+
+class Player{
+  constructor(y){
+    this.y = y;
+    this.boundry = height*2/3;
+    this.canJump = false;
+    this.forceY = 0;
+    this.jumpHeight = 30;
+  }
+
+  settingJumpHeight(jump){
+    this.jumpHeight = jump();
+  }
+
+  display(){
+    square(width/4,this.y,10);
+  }
+
+  checkingIfOnGround(){
+    if(this.y === this.boundry){
+      this.canJump = true;
+      this.forceY = 0;
+    }
+    else{
+      this.canJump = false;
+    }
+  }
+
+  jump(){
+    if(this.canJump === true){
+      this.forceY -= this.jump_height;
+    }
+  }
+
+  action(){
+    if(keyIsPressed && keyCode === 32){
+      jump();
+    }
+  }
+  
+  
 }
