@@ -3,9 +3,22 @@
 // 11/28/2024
 
 //too add list
-//seconed background to move from oppsite direction to get rid of any blind spots
-//add steampunk theme
-//make a for loop for adding backgrounds
+//graivty
+//jumping
+//sprite
+//diffrent pages to neat up code
+//add obstacnles
+//add sprites
+//add hit detection
+//add death
+// add score
+//add high score
+// keep high score through diffrent games
+//make it harder as it went on
+//add music
+//add title screen
+//add game over screen
+//
 let floor;
 let banner;
 let sky;
@@ -38,6 +51,7 @@ function draw() {
   background(220);
   ground.action();
   player.display();
+  player.action();
 }
 
 class Ground{
@@ -108,13 +122,9 @@ class Player{
     this.boundry = height*2/3;
     this.canJump = false;
     this.forceY = 0;
-    this.jumpHeight = 30;
+    this.jumpHeight = 60;
   }
-
-  settingJumpHeight(jump){
-    this.jumpHeight = jump();
-  }
-
+ 
   display(){
     square(width/4,this.y,10);
   }
@@ -131,13 +141,13 @@ class Player{
 
   jump(){
     if(this.canJump === true){
-      this.forceY -= this.jump_height;
+      this.y = this.y - this.jumpHeight;
     }
   }
 
   action(){
     if(keyIsPressed && keyCode === 32){
-      jump();
+      player.jump();
     }
   }
   
