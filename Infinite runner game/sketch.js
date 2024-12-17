@@ -18,7 +18,7 @@
 //add music
 //add title screen
 //add game over screen
-//
+
 let floor;
 let banner;
 let sky;
@@ -26,6 +26,12 @@ let skyDetail1;
 let skyDetail2;
 let skyDetail3;
 let skyDetail4;
+let idle1;
+let idle2;
+let idle3;
+let idle4;
+let idle5;
+let idle6;
 
 let easyMode = 0;
 let normalMode = 10;
@@ -39,18 +45,23 @@ function preload(){
   skyDetail2 = loadImage("assets/bg/background 2.png");
   skyDetail3 = loadImage("assets/bg/background 3.png");
   skyDetail4 = loadImage("assets/bg/background 4.png");
+  idle1 = loadImage("assets/bg/idle 1.png");
+  idle2 = loadImage("assets/bg/idle 2.png");
+  idle3 = loadImage("assets/bg/idle 3.png");
+  idle4 = loadImage("assets/bg/idle 4.png");
+  idle5 = loadImage("assets/bg/idle 5.png");
+  idle6 = loadImage("assets/bg/idle 6.png");
 }
 
 function setup() {
-  createCanvas(1028, windowHeight);
+  createCanvas(1028, windowHeight*0.95);
   ground = new Ground(height*2/3,10);
-  player = new Player(height*2/3);
+  player = new Player(height*2/3 - 100);
 }
 
 function draw() {
   background(220);
   ground.action();
-  player.display();
   player.action();
 }
 
@@ -119,20 +130,63 @@ class Ground{
 class Player{
   constructor(y){
     this.y = y;
-    this.boundry = height*2/3;
+    this.boundry = height*2/3 - 100;
     this.canJump = false;
-    this.forceY = 0;
-    this.jumpHeight = 60;
+    this.forceY = 0.5;
+    this.v = 0;
+    this.animationLoop = 1;
   }
  
   display(){
-    square(width/4,this.y,10);
+    if(this.animationLoop === 1){
+      image(idle1,width/4,this.y);
+      if(frameCount > 60){
+        frameCount = 0;
+        this.animationLoop = this.animationLoop + 1;
+      }
+    }
+    if(this.animationLoop === 2){
+      image(idle2,width/4,this.y);
+      if(frameCount > 60){
+        frameCount = 0;
+        this.animationLoop = this.animationLoop + 1;
+      }
+    }
+    if(this.animationLoop === 3){
+      image(idle3,width/4,this.y);
+      if(frameCount > 60){
+        frameCount = 0;
+        this.animationLoop = this.animationLoop + 1;
+      }
+    }
+    if(this.animationLoop === 4){
+      image(idle4,width/4,this.y);
+      if(frameCount > 60){
+        frameCount = 0;
+        this.animationLoop = this.animationLoop + 1;
+      }
+    }
+    if(this.animationLoop === 5){
+      image(idle5,width/4,this.y);
+      if(frameCount > 60){
+        frameCount = 0;
+        this.animationLoop = this.animationLoop + 1;
+      }
+    }
+    if(this.animationLoop === 6){
+      image(idle6,width/4,this.y);
+      if(frameCount > 60){
+        frameCount = 0;
+        this.animationLoop = 1;
+      }
+    }
   }
+   
 
   checkingIfOnGround(){
-    if(this.y === this.boundry){
+    if(this.y >= this.boundry){
       this.canJump = true;
-      this.forceY = 0;
+      this.v = 0;
     }
     else{
       this.canJump = false;
@@ -141,14 +195,19 @@ class Player{
 
   jump(){
     if(this.canJump === true){
-      this.y = this.y - this.jumpHeight;
+      this.v = 18;
     }
   }
 
   action(){
     if(keyIsPressed && keyCode === 32){
-      player.jump();
+      this.jump();
     }
+    this.y -= this.v;
+    this.v -= this.forceY;
+
+    this.checkingIfOnGround();
+    this.display();
   }
   
   
