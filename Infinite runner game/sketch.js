@@ -16,6 +16,9 @@
 //add title screen
 //add game over screen
 
+//create a list of objects that push into the screen and when x position is
+//less then 0 it shifts and a new item gets added to the back of the list
+
 //setting different varibles
 let floor;
 let banner;
@@ -30,6 +33,8 @@ let idle3;
 let idle4;
 let idle5;
 let idle6;
+
+let objectList = [];
 
 let easyMode = 0;
 let normalMode = 10;
@@ -59,10 +64,49 @@ function setup() {
   createCanvas(1028, windowHeight*0.95);
   ground = new Ground(height*2/3,10);
   player = new Player(height*2/3 - 100);
+  objectList.push(new Obstacnles(int(random(0,2)),height*2/3 - 100));
 }
 
 function draw() {
   background(220);
   ground.action();
   player.action();
+  for(let i = 0; i < objectList.length; i++){
+    let o = objectList[i];
+    o.action();
+    if(o.active === false){
+      objectList.shift();
+      objectList.push(new Obstacnles(int(random(0,2)),height*2/3 - 100));
+    }
+  }
+}
+
+class Obstacnles{
+  constructor(t,y){
+   this.t = t //type of obstacles
+   this.y = y; //y position
+   this.x = width;
+   this.active = true;
+  }
+
+  display(){
+    if(this.t === 0){
+      square(this.x,this.y,100);
+    }
+    else if(this.t === 1){
+      rect(this.x,this.y + 50,200,50)
+    }
+  }
+
+  move(){
+    this.x = this.x - 15;
+    if(this.x <= 0){
+      this.active = false;
+    }
+  }
+
+  action(){
+    this.display();
+    this.move();
+  }
 }

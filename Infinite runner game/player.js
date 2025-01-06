@@ -72,7 +72,7 @@ class Player{
     jump(){
         //setting velcity
       if(this.canJump === true){
-        this.v = 18;
+        this.v = 12 ;
       }
     }
   
