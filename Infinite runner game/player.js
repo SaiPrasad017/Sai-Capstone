@@ -9,6 +9,10 @@ class Player{
       this.forceY = 0.5;
       this.v = 0;
       this.animationLoop = 1;
+      this.top;
+      this.left;
+      this.right;
+      this.bottom;
     }
    
     display(){
@@ -75,6 +79,12 @@ class Player{
         this.v = 12 ;
       }
     }
+
+    hitBox(){
+      this.left = width/4;
+      this.right = width/4 + 100;
+      this.bottom = this.y + 100;
+    }
   
     action(){
       if(keyIsPressed && keyCode === 32){
@@ -85,5 +95,6 @@ class Player{
   
       this.checkingIfOnGround();
       this.display();
+      this.hitBox();
     }
   }

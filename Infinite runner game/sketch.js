@@ -4,9 +4,7 @@
 
 //too add list
 //diffrent pages to neat up code
-//add obstacnles
 //add sprites
-//add hit detection
 //add death
 // add score
 //add high score
@@ -16,8 +14,7 @@
 //add title screen
 //add game over screen
 
-//create a list of objects that push into the screen and when x position is
-//less then 0 it shifts and a new item gets added to the back of the list
+//add if statment to to draw loop called game states
 
 //setting different varibles
 let floor;
@@ -78,6 +75,9 @@ function draw() {
       objectList.shift();
       objectList.push(new Obstacnles(int(random(0,2)),height*2/3 - 100));
     }
+    if(Obstacnles.isHit === true){
+      //end game
+    }
   }
 }
 
@@ -87,6 +87,10 @@ class Obstacnles{
    this.y = y; //y position
    this.x = width;
    this.active = true;
+   this.isHit = false;
+   this.top;
+   this.left;
+   this.right;
   }
 
   display(){
@@ -103,10 +107,21 @@ class Obstacnles{
     if(this.x <= 0){
       this.active = false;
     }
+
+    // update malt if change sprite
+    this.top = this.y + this.t * 50;
+    this.left = this.x
+    this.right = this.x + 100 + 100 * this.t
+
+    print(player.right,player.left,player.bottom,this.right,this.left, this.top);
+    if(player.right > this.left && player.left < this.right && player.bottom > this.top){
+      print("over");
+    }
+
   }
 
   action(){
-    this.display();
     this.move();
+    this.display();
   }
 }
