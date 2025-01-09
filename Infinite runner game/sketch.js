@@ -30,6 +30,9 @@ let idle3;
 let idle4;
 let idle5;
 let idle6;
+let title;
+
+let gameState = 0;
 
 let objectList = [];
 
@@ -55,6 +58,9 @@ function preload(){
   idle4 = loadImage("assets/bg/idle 4.png");
   idle5 = loadImage("assets/bg/idle 5.png");
   idle6 = loadImage("assets/bg/idle 6.png");
+
+  //title screen
+  title = loadImage("assets/bg/Logo1.png");
 }
 
 function setup() {
@@ -62,10 +68,14 @@ function setup() {
   ground = new Ground(height*2/3,10);
   player = new Player(height*2/3 - 100);
   objectList.push(new Obstacnles(int(random(0,2)),height*2/3 - 100));
+  mainMenu = new GameStart;
 }
 
 function draw() {
-  background(220);
+  if(gameState === 0){
+    mainMenu.display();
+  }
+  else{
   ground.action();
   player.action();
   for(let i = 0; i < objectList.length; i++){
@@ -75,10 +85,11 @@ function draw() {
       objectList.shift();
       objectList.push(new Obstacnles(int(random(0,2)),height*2/3 - 100));
     }
-    if(Obstacnles.isHit === true){
-      //end game
+     if(Obstacnles.isHit === true){
+       //end game
     }
   }
+}
 }
 
 class Obstacnles{
@@ -103,7 +114,7 @@ class Obstacnles{
   }
 
   move(){
-    this.x = this.x - 15;
+      this.x = this.x - 15;
     if(this.x <= 0){
       this.active = false;
     }
@@ -113,7 +124,7 @@ class Obstacnles{
     this.left = this.x
     this.right = this.x + 100 + 100 * this.t
 
-    print(player.right,player.left,player.bottom,this.right,this.left, this.top);
+    //print(player.right,player.left,player.bottom,this.right,this.left, this.top);
     if(player.right > this.left && player.left < this.right && player.bottom > this.top){
       print("over");
     }
@@ -123,5 +134,16 @@ class Obstacnles{
   action(){
     this.move();
     this.display();
+  }
+}
+
+class GameStart{
+  constructor(){
+    this.tileScreenY = height/4;
+    this.tileScreenX = 1028/2;
+  }
+
+  display(){
+    image(title,0,0);
   }
 }
