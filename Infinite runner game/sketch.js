@@ -34,6 +34,9 @@ let title;
 let menuBackground;
 let startButt;
 let startButt1;
+let endGround;
+
+let startTime;
 
 let gameState = 0;
 
@@ -67,40 +70,55 @@ function preload(){
   menuBackground = loadImage("assets/bg/menu background.png");
   startButt = loadImage("assets/bg/start.png");
   startButt1 = loadImage("assets/bg/start (1).png");
+
+  //end screen
+  endGround = loadImage("assets/bg/end background.png");
+
 }
 
 function setup() {
   createCanvas(1028, windowHeight*0.95);
+  gameState = 0;
   ground = new Ground(height*2/3,10);
   player = new Player(height*2/3 - 100);
   objectList.push(new Obstacnles(int(random(0,2)),height*2/3 - 100));
   mainMenu = new GameStart;
+  endScreen = new GameEnd;
 }
 
 function draw() {
   if(gameState === 0){
     mainMenu.action();
   }
-  else{
-  ground.action();
-  player.action();
-  for(let i = 0; i < objectList.length; i++){
-    let o = objectList[i];
-    o.action();
-    if(o.active === false){
-      objectList.shift();
-      objectList.push(new Obstacnles(int(random(0,2)),height*2/3 - 100));
-    }
-     if(Obstacnles.isHit === true){
-       //end game
+  else if(gameState === 1){
+    ground.action();
+    player.display();
+    if(millis() - startTime > 5000){
+      gameState = 2;
     }
   }
-}
+  else if(gameState === 2){
+    ground.action();
+    player.action();
+    for(let i = 0; i < objectList.length; i++){
+      let o = objectList[i];
+      o.action();
+      if(o.active === false){
+        objectList.shift();
+        objectList.push(new Obstacnles(int(random(0,2)),height*2/3 - 100));
+      }
+    }
+  }
+  else if(gameState === 3){
+    endScreen.action();
+  }
 }
 
 function mousePressed(){
   if(mouseX >= width/2 && mouseX <= width/2 + 100 && mouseY >= height/2 - 50 && mouseY <= height/2 + 150){
-    gameState++;
+    startTime = millis();
+    gameState = 1;
+    
   }
 }
 
@@ -139,6 +157,7 @@ class Obstacnles{
     //print(player.right,player.left,player.bottom,this.right,this.left, this.top);
     if(player.right > this.left && player.left < this.right && player.bottom > this.top){
       print("over");
+      gameState = 3;
     }
 
   }
@@ -179,5 +198,38 @@ class GameStart{
   action(){
     mainMenu.display();
     mainMenu.move();
+  }
+}
+
+class GameEnd{
+  constructor(){
+    this.xPosition = 0;
+  }
+
+  display(){
+    image(endGround,this.xPosition,0);
+    print('a');
+    if(mouseX >= width/2 && mouseX <= width/2 + 100 && mouseY >= height/2 - 50 && mouseY <= height/2 + 150){
+      image(startButt1,width/2, height/2 - 50);
+      print("b")
+    }
+    else{
+      image(startButt,width/2, height/2 - 50);
+    }
+
+    //square(width/2, height/2 - 50,100);
+    image(title,width/4 - 70,25);
+  }
+
+  move(){
+    this.xPosition = this.xPosition - 1;
+    if(this.xPosition < -2048){
+      this.xPosition = 0;
+    }
+  }
+
+  action(){
+    endScreen.display();
+    endScreen.move();
   }
 }

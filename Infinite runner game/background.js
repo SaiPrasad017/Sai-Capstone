@@ -55,7 +55,6 @@ class Ground{
         this.skyX = 0;
       }
     }
-  
     action(){
       this.display();
       this.move();
