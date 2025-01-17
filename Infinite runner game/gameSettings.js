@@ -16,7 +16,20 @@ class GameStart{
       }
   
       //square(width/2, height/2 - 50,100);
-      image(title,width/4 - 70,25);
+      image(title,width/4 - 150,25);
+      rect(width/4 - 100,100,650,100)
+      //letters
+      image(n,width/4 - 100,125,50,50);
+      image(i,width/4 -50,125,50,50);
+      image(g,width/4,125,50,50);
+      image(h,width/4 + 50,125,50,50);
+      image(t,width/4 + 100,125,50,50);
+      image(r,width/4 + 200,125,50,50);
+      image(i,width/4 + 250,125,50,50);
+      image(d,width/4 + 300,125,50,50);
+      image(e,width/4 + 350,125,50,50);
+      image(r,width/4 + 400,125,50,50);
+      image(number2,width/4 + 500,125,50,50);     
     }
   
     move(){
@@ -49,7 +62,19 @@ class GameStart{
       }
   
       //square(width/2, height/2 - 50,100);
-      image(title,width/4 - 70,25);
+      image(title,width/4 - 150,25);
+      rect(width/4 - 100,100,650,100);
+
+      image(g,width/4 - 50,125,50,50);
+      image(a,width/4,125,50,50);
+      image(m,width/4 + 50,125,50,50);
+      image(e,width/4 + 100,125,50,50);
+      
+      image(o,width/4 + 200,125,50,50);
+      image(v,width/4 + 250,125,50,50);
+      image(e,width/4 + 300,125,50,50);
+      image(r,width/4 + 350,125,50,50);
+ 
     }
   
     move(){

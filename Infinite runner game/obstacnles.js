@@ -13,15 +13,23 @@ class Obstacnles{
   
     display(){
       if(this.t === 0){
-        square(this.x,this.y,100);
+        image(box,this.x,this.y,100,100);
+        //square(this.x,this.y,100);
       }
       else if(this.t === 1){
-        rect(this.x,this.y + 50,200,50)
+        image(bench,this.x,this.y + 50,200,50);
+        //rect(this.x,this.y + 50,200,50)
       }
     }
   
     move(){
-        this.x = this.x - 15;
+        if(newScore > 200){
+          this.x = this.x - 20;
+        }
+        else{
+          this.x = this.x - 15;
+        }
+
       if(this.x <= 0){
         this.active = false;
       }

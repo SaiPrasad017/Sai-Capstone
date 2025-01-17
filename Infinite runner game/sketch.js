@@ -2,21 +2,28 @@
 // Sai Prasad
 // 11/28/2024
 
-//too add list
-//diffrent pages to neat up code
-//add sprites
-//add death
-// add score
-//add high score
-// keep high score through diffrent games
-//make it harder as it went on
-//add music
-//add title screen
-//add game over screen
-
-//add if statment to to draw loop called game states
-
 //setting different varibles
+
+//score
+let newScore = 0;
+let highScore = 0;
+
+//letters
+let g;
+let d;
+let e;
+let a;
+let h;
+let i;
+let n;
+let o;
+let r;
+let t;
+let v;
+let m;
+let number2;
+
+// for the ground
 let floor;
 let banner;
 let sky;
@@ -24,12 +31,18 @@ let skyDetail1;
 let skyDetail2;
 let skyDetail3;
 let skyDetail4;
+let box;
+let bench;
+
+//for the player
 let idle1;
 let idle2;
 let idle3;
 let idle4;
 let idle5;
 let idle6;
+
+// for the end and start screen
 let title;
 let menuBackground;
 let startButt;
@@ -37,19 +50,16 @@ let startButt1;
 let endGround;
 
 let startTime;
-
 let gameState = 0;
 
 let objectList = [];
-
-let easyMode = 0;
-let normalMode = 10;
-let hardMode = 20;
 
 function preload(){
   floor = loadImage("assets/bg/01_ground.png");
   banner = loadImage("assets/bg/flag.png");
   sky = loadImage("assets/bg/background.png");
+  box = loadImage("assets/bg/Box1.png")
+  bench = loadImage("assets/bg/bench.png")
 
   //sky details
   skyDetail1 = loadImage("assets/bg/background 1.png");
@@ -74,10 +84,25 @@ function preload(){
   //end screen
   endGround = loadImage("assets/bg/end background.png");
 
+  //letters
+ g = loadImage("assets/bg/G.png");
+ d = loadImage("assets/bg/D.png");
+ e = loadImage("assets/bg/E.png");
+ a = loadImage("assets/bg/A.png");
+ h = loadImage("assets/bg/H.png");
+ i = loadImage("assets/bg/I.png");
+ n = loadImage("assets/bg/N.png");
+ o = loadImage("assets/bg/O.png");
+ r = loadImage("assets/bg/R.png");
+ t = loadImage("assets/bg/T.png");
+ v = loadImage("assets/bg/V.png");
+ m = loadImage("assets/bg/M.png");
+ number2 = loadImage("assets/bg/2.png");
 }
 
 function setup() {
   createCanvas(1028, windowHeight*0.95);
+  newScore = 0;
   gameState = 0;
   ground = new Ground(height*2/3,10);
   player = new Player(height*2/3 - 100);
@@ -92,14 +117,31 @@ function draw() {
   }
   else if(gameState === 1){
     ground.action();
+    player.y = height*2/3 - 100;
     player.display();
+    textSize(100);
     if(millis() - startTime > 5000){
+      text("1",width/2,height/2);
       gameState = 2;
     }
+    else if(millis() - startTime > 4000){
+      text("2",width/2,height/2);
+    }
+    else if(millis() - startTime > 3000){
+      text("3",width/2,height/2);
+    }
+    else if(millis() - startTime > 2000){
+      text("4",width/2,height/2);
+    }
+    else if(millis() - startTime > 1000){
+      text("5",width/2,height/2);
+    }
+    
   }
   else if(gameState === 2){
     ground.action();
     player.action();
+    score();
     for(let i = 0; i < objectList.length; i++){
       let o = objectList[i];
       o.action();
@@ -110,126 +152,45 @@ function draw() {
     }
   }
   else if(gameState === 3){
+    //high score?
     endScreen.action();
+    newScore = 0;
+    textSize(100);
+    text("high score " + highScore,50, height/2 + 200);
   }
 }
 
 function mousePressed(){
-  if(mouseX >= width/2 && mouseX <= width/2 + 100 && mouseY >= height/2 - 50 && mouseY <= height/2 + 150){
-    startTime = millis();
-    gameState = 1;
-    
-  }
-}
-
-class Obstacnles{
-  constructor(t,y){
-   this.t = t //type of obstacles
-   this.y = y; //y position
-   this.x = width;
-   this.active = true;
-   this.isHit = false;
-   this.top;
-   this.left;
-   this.right;
-  }
-
-  display(){
-    if(this.t === 0){
-      square(this.x,this.y,100);
-    }
-    else if(this.t === 1){
-      rect(this.x,this.y + 50,200,50)
-    }
-  }
-
-  move(){
-      this.x = this.x - 15;
-    if(this.x <= 0){
-      this.active = false;
-    }
-
-    // update malt if change sprite
-    this.top = this.y + this.t * 50;
-    this.left = this.x
-    this.right = this.x + 100 + 100 * this.t
-
-    //print(player.right,player.left,player.bottom,this.right,this.left, this.top);
-    if(player.right > this.left && player.left < this.right && player.bottom > this.top){
-      print("over");
-      gameState = 3;
-    }
-
-  }
-
-  action(){
-    this.move();
-    this.display();
-  }
-}
-
-class GameStart{
-  constructor(){
-    this.xPosition = 0;
-  }
-
-  display(){
-    image(menuBackground,this.xPosition,0);
-    print('a');
+  if(gameState === 0){
     if(mouseX >= width/2 && mouseX <= width/2 + 100 && mouseY >= height/2 - 50 && mouseY <= height/2 + 150){
-      image(startButt1,width/2, height/2 - 50);
-      print("b")
-    }
-    else{
-      image(startButt,width/2, height/2 - 50);
-    }
-
-    //square(width/2, height/2 - 50,100);
-    image(title,width/4 - 70,25);
-  }
-
-  move(){
-    this.xPosition = this.xPosition - 1;
-    if(this.xPosition < -2048){
-      this.xPosition = 0;
+      objectList = [];
+      objectList.push(new Obstacnles(int(random(0,2)),height*2/3 - 100));
+      startTime = millis();
+      gameState = 1;
     }
   }
-
-  action(){
-    mainMenu.display();
-    mainMenu.move();
+  if(gameState === 3){
+    if(mouseX >= width/2 && mouseX <= width/2 + 100 && mouseY >= height/2 - 50 && mouseY <= height/2 + 150){
+      startTime = millis();
+      gameState = 0;
+    }
   }
 }
 
-class GameEnd{
-  constructor(){
-    this.xPosition = 0;
-  }
-
-  display(){
-    image(endGround,this.xPosition,0);
-    print('a');
-    if(mouseX >= width/2 && mouseX <= width/2 + 100 && mouseY >= height/2 - 50 && mouseY <= height/2 + 150){
-      image(startButt1,width/2, height/2 - 50);
-      print("b")
-    }
-    else{
-      image(startButt,width/2, height/2 - 50);
-    }
-
-    //square(width/2, height/2 - 50,100);
-    image(title,width/4 - 70,25);
-  }
-
-  move(){
-    this.xPosition = this.xPosition - 1;
-    if(this.xPosition < -2048){
-      this.xPosition = 0;
+function score(){
+  textSize(35);
+  if(frameCount % 2 === 1 ){
+    if(frameCount % 3 === 2){
+      newScore++;
     }
   }
-
-  action(){
-    endScreen.display();
-    endScreen.move();
+  highScore = localStorage.getItem("high score:")
+  int(highScore);
+  if(newScore > highScore){
+    highScore = newScore;
   }
+
+  localStorage.setItem('high score:', highScore);
+  text("high score " + highScore, 50, 50)
+  text("score: " + newScore,600,50);
 }

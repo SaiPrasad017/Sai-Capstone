@@ -27,14 +27,19 @@ class Ground{
   
     move(){
       //floor movement
-      this.xPosition = this.xPosition - (this.speed*2 + easyMode);
+      this.xPosition = this.xPosition - this.speed*2
   
       //banner movement
-      this.bannerX = this.bannerX - ((this.speed - 5) + easyMode);
+      this.bannerX = this.bannerX - (this.speed - 5) 
   
   
       //BACKGROUND MOVING
-      this.skyX = this.skyX - (this.speed - 4);
+      if(newScore > 200){
+        this.skyX = this.skyX - (this.speed - 10);
+      }
+      else{
+        this.skyX = this.skyX - (this.speed - 4);
+      }
   
   
       //floor moving consistently
