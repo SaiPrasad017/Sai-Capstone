@@ -49,6 +49,7 @@ let startButt;
 let startButt1;
 let endGround;
 
+// other
 let startTime;
 let gameState = 0;
 
@@ -102,8 +103,11 @@ function preload(){
 
 function setup() {
   createCanvas(1028, windowHeight*0.95);
+  //resetting varibles
   newScore = 0;
   gameState = 0;
+
+  //creating game objects
   ground = new Ground(height*2/3,10);
   player = new Player(height*2/3 - 100);
   objectList.push(new Obstacnles(int(random(0,2)),height*2/3 - 100));
@@ -112,9 +116,11 @@ function setup() {
 }
 
 function draw() {
+  //title screen
   if(gameState === 0){
     mainMenu.action();
   }
+  //5 seconed count down
   else if(gameState === 1){
     ground.action();
     player.y = height*2/3 - 100;
@@ -136,8 +142,8 @@ function draw() {
     else if(millis() - startTime > 1000){
       text("5",width/2,height/2);
     }
-    
   }
+  // game is running
   else if(gameState === 2){
     ground.action();
     player.action();
@@ -151,6 +157,7 @@ function draw() {
       }
     }
   }
+  //end screen
   else if(gameState === 3){
     //high score?
     endScreen.action();
